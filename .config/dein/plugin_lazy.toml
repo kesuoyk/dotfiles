@@ -1,0 +1,90 @@
+# 閉じ括弧を補完
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+
+# Neovim で矩形選択でのコピペがうまく行かないのを直す
+[[plugins]]
+repo = 'bfredl/nvim-miniyank'
+if = "has('nvim')"
+hook_source = '''
+  map p <Plug>(miniyank-autoput)
+  map P <Plug>(miniyank-autoPut)
+'''
+
+# HTML のタグ補完など
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['php', 'blade', 'html', 'vue', 'tsx', 'typescriptreact', 'smarty']
+hook_source = '''
+  let g:user_emmet_mode = 'a'
+  let g:user_emmet_leader_key = '<C-Y>'
+'''
+
+# HTML のタグの対応関係をハイライト
+[[plugins]]
+repo = 'Valloric/MatchTagAlways'
+if = 0
+on_ft = ['blade', 'html', 'vue', 'xhtml', 'xml']
+hook_source = '''
+  let g:mta_filetypes = {
+    \ 'blade': 1,
+    \ 'html': 1,
+    \ 'vue': 1,
+    \ 'xhtml': 1,
+    \ 'xml': 1,
+  \ }
+'''
+
+# 補完のインタフェース
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertEnter'
+hook_source = '''
+  let g:deoplete#enable_at_startup = 1
+
+	autocmd CompleteDone * silent! pclose!
+'''
+
+# スニペット管理のインタフェース
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_event = 'InsertEnter'
+#depends = ['neosnippet-snippets']
+hook_source = '''
+  let g:neosnippet#snippets_directory = $XDG_CONFIG_HOME . '/nvim/snips'
+
+  " デフォルトスニペットを無効
+  let g:neosnippet#disable_runtime_snippets = {
+    \   '_' : 1,
+    \ }
+
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+'''
+
+# neosnippet のデフォルトスニペット
+[[plugins]]
+if = 0
+repo = 'Shougo/neosnippet-snippets'
+
+# ヘルプファイルを日本語化
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+on_ft = 'help'
+hook_source = '''
+  set helplang=ja
+'''
+
+# 静的解析ツール
+[[plugins]]
+repo = 'dense-analysis/ale'
+on_ft = ['vue', 'typescript', 'tsx', 'javascript', 'jsx']
+hook_source = '''
+  let g:ale_completion_autoimport = 1
+'''

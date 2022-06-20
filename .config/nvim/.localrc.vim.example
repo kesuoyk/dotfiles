@@ -1,0 +1,2 @@
+let g:env_project_root_dir = expand("%:p:h") . '/laravel'
+let g:env_test_command_phpunit = 'docker-compose exec -T laravel ./vendor/bin/phpunit'

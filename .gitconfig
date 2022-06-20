@@ -1,0 +1,89 @@
+# This is Git's per-user configuration file.
+[user]
+    name = kkytky
+    email = 107860025+kkytky@users.noreply.github.com
+[push]
+    default = current
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = nvim
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[diff]
+    tool = nvimdiff
+[merge]
+    tool = nvimdiff
+    conflictstyle = diff3
+[difftool "nvimdiff"]
+    cmd = "nvim -R -d -c \"wincmd l\" -d \"$LOCAL\" \"$REMOTE\""
+[mergetool "nvimdiff"]
+    cmd = "nvim -d -c \"4wincmd w | wincmd J\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"  \"$MERGED\""
+[alias]
+    a = add
+    b = branch
+    ba = branch --all
+    bd = branch --delete
+    bm = branch --move
+    br = branch --remote
+    co = checkout
+    com = checkout master
+    cob = checkout -b
+    c = commit
+    ca = commit --all
+    can = commit --all --amend
+    cam = commit --all --message
+    camn = commit --all --message --amend
+    cem = commit --allow-empty --message
+    cm = commit --message
+    cmn = commit --message --amend
+    cn = commit --amend
+    cp = cherry-pick
+    d = diff
+    dc = diff --cached
+    dw = diff --word-diff
+    dwc = diff --word-diff --cached
+    f = fetch
+    m = merge
+    mt = mergetool
+    ps = push
+    psu = push --set-upstream
+    psf = push --force
+    pl = pull
+    plr = pull --rebase
+    pwb = symbolic-ref --short HEAD
+    rb = rebase
+    rbi = rebase --interactive
+    rbc = rebase --continue
+    rss = reset --soft
+    rsm = reset --mixed
+    rsh = reset --hard
+    sa = stash apply
+    sc = stash clear
+    ss = stash save
+    ssu = stash save -u
+    sl = stash list
+    sp = stash pop
+    s = status
+    sh = show
+    l = log
+    lo = log --oneline --pretty='format:%C(yellow)%h %C(green)%cd %C(blue)%an%C(red)%d %C(reset)%s'
+    lgo = log --graph --oneline --pretty=format:'%C(bold blue)<%an>%Creset %C(yellow)%h%Creset -%C(red)%d%Creset %s'
+[http]
+    sslVerify = false
+[credintial]
+    helper = cache
+[status]
+    displaycommentprefix = true
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[fetch]
+    prune = true
+[pull]
+#	ff = only
+[init]
+	defaultBranch = main
