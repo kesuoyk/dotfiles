@@ -1,6 +1,6 @@
 # This is Git's per-user configuration file.
 [user]
-    name = kkytky
+	name = kesuoyk
     email = 107860025+kkytky@users.noreply.github.com
 [push]
     default = current
