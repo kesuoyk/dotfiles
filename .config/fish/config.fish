@@ -3,7 +3,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export DOCKER_CONTENT_TRUST=1
 
-eval (/opt/homebrew/bin/brew shellenv)
+eval (/usr/local/bin/brew shellenv)
 
 set -x PATH ./vendor/bin $PATH
 
