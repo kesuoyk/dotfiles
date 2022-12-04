@@ -155,6 +155,11 @@ for i in range(1, 9)
   execute "nnoremap \<Leader>" . i . " " . i . "<C-w><C-w>"
 endfor
 
+" タブ切り替え
+for i in range(1, 9)
+  execute "nnoremap \<Leader><Space>" . i . " " . i . "gt"
+endfor
+
 nnoremap <silent> <Leader>l :exe "vertical resize " . "+16"<CR>
 nnoremap <silent> <Leader>h :exe "vertical resize " . "-16"<CR>
 nnoremap <silent> <Leader>k :exe "resize " . "+8"<CR>
@@ -281,7 +286,7 @@ set sessionoptions=buffers,curdir,folds,help,localoptions,tabpages,winpos,winsiz
 
 " --- 見た目 ---
 set showmatch " 対応する括弧を強調表示
-"set cursorline " カーソルラインの強調表示
+set cursorline " カーソルラインの強調表示
 "set cursorcolumn " カーソルラインの強調表示（縦）
 set number " 行番号の表示
 set colorcolumn=100 " 縦のライン表示
@@ -311,7 +316,7 @@ set splitright " 新しいウィンドウを右に開く
 set winwidth=30 " ウィンドウの最小幅
 set winheight=20 " カレントウィンドウの最小の高さ
 set winminheight=0 " ウィンドウの最小の高さ
-" set noequalalways " ウィンドウを閉じたり開いたりした場合に、カレントウィンドウ以外の高さ、幅を整えない
+set noequalalways " ウィンドウを閉じたり開いたりした場合に、カレントウィンドウ以外の高さ、幅を整えない
 
 augroup window
     autocmd!

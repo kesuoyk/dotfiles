@@ -6,9 +6,9 @@ endfunction
 function! ui#tabline() abort
     let s = ' '
 
-    for i in range(tabpagenr('$'))
-        let s .= '%' . (i + 1) . 'T' " タブページ番号の設定 (マウスクリック用)
-        let s .= ui#tablabel(i + 1) . '  '
+    let last = tabpagenr('$')
+    for i in range(last)
+        let s .= ui#tablabel(i + 1, last)
     endfor
 
     " 最後のタブページの後は TabLineFill で埋め、タブページ番号をリセットする
@@ -20,33 +20,28 @@ function! ui#tabline() abort
     else
         let session = substitute(fnamemodify(v:this_session, ':t'), '\v\.vim', '', '')
     endif
-    let s .= '%=%#ColorColumn#' . '[' . session . ']'
+    let s .= '%=%#Normal#' . '[' . session . ']'
 
     return s
 endfunction
 
-function! ui#tablabel(n) abort
+function! ui#tablabel(n, last) abort
     let s = ''
 
-    let s .= '%#Title#'
+    " タブページ番号の設定 (マウスクリック用)
+    let s .= '%' . a:n . 'T'
 
-    " タブページ内のウィンドウの個数を表示
-    let win_count = tabpagewinnr(a:n, '$')
-    if win_count > 1
-        let s .= win_count
-    endif
-
-    let s .= a:n == tabpagenr()
-                \ ? '%#TabLineSel#'
-                \ : '%#TabLine#'
-
-    if win_count > 1
-        let s .= ' '
-    endif
+    " タブページ番号を表示
+    " let s .= '%#TabLineSel#'
+    let s .= a:n == tabpagenr() ? '%#TabLineSel#' : '%#Delimiter#'
+    let s .= '#' . a:n . ' '
 
     let buflist = tabpagebuflist(a:n)
 
     " カレントウィンドウのバッファ名を表示
+    let s .= a:n == tabpagenr()
+                \ ? '%#TabLineSel#'
+                \ : '%#TabLine#'
     let bn = bufname(buflist[tabpagewinnr(a:n) - 1])
     if bn == ''
         let s .= '[New]'
@@ -69,6 +64,10 @@ function! ui#tablabel(n) abort
     if modified > 0
         let s .= ' [' . modified . '+]'
     endif
+
+    " 区切りを追加
+    let s .= '%#TabLineFill#'
+    let s .= a:n == a:last ? '' : '  '
 
     return s
 endfunction
