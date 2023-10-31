@@ -1,6 +1,12 @@
 function! ui#statusline() abort
-    let s = '#%{winnr()} %<%f%m%r%h%w  %=[%{&fileencoding}][%{&filetype}][%l/%L,%c]'
-    return s
+    let fileencoding = empty(&fileencoding) ? '' : printf("[%s]", &fileencoding)
+    let filetype = empty(&filetype) ? '' : printf("[%s]", &filetype)
+    return [
+        \ '#%{winnr()} %<%f%m%r%h%w  %=',
+        \ fileencoding,
+        \ filetype,
+        \ '[%l/%L,%c]'
+        \ ]->join('')
 endfunction
 
 function! ui#tabline() abort

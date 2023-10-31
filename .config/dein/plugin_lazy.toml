@@ -53,6 +53,7 @@ on_event = 'InsertEnter'
 #depends = ['neosnippet-snippets']
 hook_source = '''
   let g:neosnippet#snippets_directory = $XDG_CONFIG_HOME . '/nvim/snips'
+  let g:neosnippet#enable_completed_snippet = 1
 
   " デフォルトスニペットを無効
   let g:neosnippet#disable_runtime_snippets = {
@@ -83,6 +84,7 @@ hook_source = '''
 
 # 静的解析ツール
 [[plugins]]
+if = 0
 repo = 'dense-analysis/ale'
 on_ft = ['vue', 'typescript', 'tsx', 'javascript', 'jsx']
 hook_source = '''

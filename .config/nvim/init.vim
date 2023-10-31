@@ -63,10 +63,21 @@ command! DeinClean :call s:deinClean()
 lua << EOF
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.intelephense.setup{}
---require'nvim_lsp'.vuels.setup{}
+require'lspconfig'.volar.setup{
+  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+}
+require'lint'.linters_by_ft = {
+  markdown = {'eslint'}
+}
 EOF
 
 "}}}
+
+augroup plugin
+    autocmd!
+    autocmd Filetype json :IndentGuidesDisable
+    autocmd BufWritePost * lua require('lint').try_lint()
+augroup END
 
 " --------------
 "   マッピング
@@ -106,16 +117,10 @@ nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
 
 " LSP
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> ]d    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-s> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> g?    <cmd>lua vim.lsp.util.show_line_diagnostics()<CR>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> ]d <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gd  <cmd>lua vim.diagnostic.open_float()<CR>
 
 "}}}
 
@@ -172,8 +177,8 @@ nnoremap <silent> <Leader>ig :<C-u>IndentGuidesToggle<CR>
 nnoremap <silent> <Leader>x :<C-u>QuickRun<CR>
 
 " Defx
-nnoremap <silent> <Leader>e<Space> :<C-u>Defx -toggle<CR>
-nnoremap <silent> <Leader>e. :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
+nnoremap <silent> <Leader>e<Space> :<C-u>Defx -buffer-name=`'defx' . tabpagenr()` -toggle<CR>
+nnoremap <silent> <Leader>e. :<C-u>Defx `expand('%:p:h')` -buffer-name=`'defx' . tabpagenr()` -search=`expand('%:p')`<CR>
 
 " Denite
 nnoremap <silent> <Leader>sb :<C-u>Denite buffer<CR>
@@ -181,13 +186,10 @@ nnoremap <silent> <Leader>sc :<C-u>Denite command<CR>
 nnoremap <silent> <Leader>sh :<C-u>Denite command_history<CR>
 nnoremap <silent> <Leader>sd :<C-u>Denite directory_rec<CR>
 nnoremap <silent> <Leader>sg :<C-u>Denite grep -resume -refresh -buffer-name=denite-grep<CR>
-nnoremap <silent> <Leader>sf :<C-u>Denite file/rec -resume<CR>
+nnoremap <silent> <Leader>sf :<C-u>Denite file/rec -resume -refresh -buffer-name=denite-file-rec<CR>
 nnoremap <silent> <Leader>sl :<C-u>Denite line<CR>
 nnoremap <silent> <Leader>so :<C-u>Denite outline<CR>
 nnoremap <silent> <Leader>sm :<C-u>Denite mark<CR>
-
-" vista
-nnoremap <silent> <Leader>v<Space> :<C-u>Vista!!<CR>
 
 " memolist.vim
 nnoremap <Leader>mn :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| MemoNew<CR>
@@ -225,6 +227,8 @@ set clipboard^=unnamed,unnamedplus " yank 時に '+' と '*' レジスタにコ�
 set breakindent " 行の折り返し時にインデントを考慮する
 set undofile " 永続的Undo機能
 set diffopt+=iwhite " vimdiff のとき空白を無視
+set ambiwidth=double
+set virtualedit=all
 
 augroup basic
     autocmd!
@@ -271,8 +275,8 @@ endfunction
 
 augroup folding
     autocmd!
-    autocmd BufEnter *.md,*.markdown setlocal foldexpr=MarkdownLevel()
-    autocmd BufEnter *.md,*.markdown setlocal foldmethod=expr
+    " autocmd BufEnter *.md,*.markdown setlocal foldexpr=MarkdownLevel()
+    " autocmd BufEnter *.md,*.markdown setlocal foldmethod=expr
 augroup END
 
 " --- タグ ---
@@ -289,7 +293,7 @@ set showmatch " 対応する括弧を強調表示
 set cursorline " カーソルラインの強調表示
 "set cursorcolumn " カーソルラインの強調表示（縦）
 set number " 行番号の表示
-set colorcolumn=100 " 縦のライン表示
+set colorcolumn=80 " 縦のライン表示
 set showcmd " 入力中のコマンドを表示
 set list " 不可視文字を表示
 set listchars=tab:>-,trail:-
@@ -345,19 +349,20 @@ augroup indent
     autocmd!
     autocmd FileType css             setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType html            setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType smarty          setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType javascript      setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType json            setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType markdown        setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType pug             setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType ruby            setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType sass            setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType scss            setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType vue             setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType smarty          setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType toml            setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType typescript      setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType typescript.tsx  setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType typescriptreact setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType toml            setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType vue             setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType yaml            setlocal tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType markdown        setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
 " ---------------------

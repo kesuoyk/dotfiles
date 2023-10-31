@@ -1,30 +1,4 @@
-snippet     vuex_module
-options     head
-    import { ActionTree, GetterTree, Module, MutationTree } from 'vuex';
-    import { RootState } from '@/store';
+snippet console.log()
+abbr log
+    cnosole.log($0)
 
-    const state = {
-      //
-    };
-
-    const mutations: MutationTree<typeof state> = {
-      //
-    };
-
-    const actions: ActionTree<typeof state, RootState> = {
-      //
-    };
-
-    const getters: GetterTree<typeof state, RootState> = {
-      //
-    };
-
-    const module: Module<typeof state, RootState> = {
-      namespaced: false,
-      state: () => state,
-      mutations,
-      actions,
-      getters,
-    };
-
-    export default module;

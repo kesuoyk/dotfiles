@@ -73,3 +73,4 @@ bind refs M ?git merge %(branch)
 # Status bindings
 bind status + !git commit --amend
 bind status x ?git clean -d -f %(file)
+bind status X ?git clean -d -f

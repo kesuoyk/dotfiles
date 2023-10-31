@@ -13,13 +13,17 @@ alias python='python3'
 alias d='docker'
 alias dc='docker-compose'
 alias dce='docker-compose exec'
+alias dcr='docker-compose run --rm'
 
 alias g='git'
-alias gco='git branch | fzf | xargs git checkout'
+alias gcom='git branch --merged | fzf | xargs git checkout'
+alias gcon='git branch --no-merged | fzf | xargs git checkout'
 alias git-delete-merged-branch='git branch --merged | egrep -v "\*" | xargs git branch -d'
 
+# alias ql='qlmanage -p ($argv) >& /dev/null'
+
 function fish_prompt --description 'Write out the prompt'
-    printf '%s %s' (set_color green)(prompt_pwd) (set_color yellow)"(*´∀`) < "
+    printf '%s %s' (set_color green)(prompt_pwd) (set_color yellow)"(*-A-) < "
 end
 
 # function hybrid_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"

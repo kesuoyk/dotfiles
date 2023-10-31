@@ -50,7 +50,7 @@ command! CopyFilePathFullToClipBoard
 command! CopyFilePathRelativeToClipBoard
             \ call util#copy_to_clipboard(util#file_path_relative())
 
-command! CleanTmpFiles
+command! CleanUpTmpFiles
             \ call util#remove_tmp_files()
 
 command! RemoveTrailingSpacesOnCurrentBuffer
@@ -92,11 +92,5 @@ function! util#unescape_utf8() abort
     execute '%s/\\u\([0-9a-f]\{4}\)/\=nr2char(eval("0x".submatch(1)),1)'
 endfunction
 
-" TODO
-function! util#js_object_to_php_array() abort
-    let text = @*
-    substitute(text, "/{", "/[")
-    substitute(text, "/}", "/]")
-    substitute(text, "\v(\w+)(\ \=\>)", "'\1'\2")
-    substitute(text, ": ", " => ")
+function! util#clean_buffer() abort
 endfunction

@@ -187,16 +187,15 @@ hook_add = '''
   call defx#custom#option('_', {
     \ 'split': 'vertical',
     \ 'direction': 'topleft',
-    \ 'winwidth': '45',
+    \ 'winwidth': '30',
     \ 'listed': v:true,
     \ 'resume': v:true,
     \ })
 
-	call defx#custom#column('filename', {
-    \ 'min_width': 40,
+  call defx#custom#column('filename', {
+    \ 'min_width': 30,
     \ 'max_width': 200,
     \ })
-
 
   autocmd FileType defx call s:defx_my_settings()
   function! s:defx_my_settings() abort
@@ -214,7 +213,9 @@ hook_add = '''
     nnoremap <silent><buffer><expr> E
     \ defx#do_action('drop', 'split')
     nnoremap <silent><buffer><expr> P
-    \ defx#do_action('open', 'pedit')
+    \ defx#do_action('preview')
+    nnoremap <silent><buffer><expr> t
+    \ defx#do_action('open', 'tabe')
     nnoremap <silent><buffer><expr> o
     \ defx#do_action('open_tree', 'toggle')
     nnoremap <silent><buffer><expr> K
@@ -277,6 +278,7 @@ hook_add = '''
   call denite#custom#option('_', 'split', 'horizontal')
   call denite#custom#option('_', 'vertical_preview', v:true)
   call denite#custom#option('_', 'preview_width', 60)
+  call denite#custom#option('_', 'max-candidate-width', 600)
 
   " Change ignore_globs
   call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
@@ -368,6 +370,10 @@ repo = 'neovim/nvim-lspconfig'
 [[plugins]]
 repo = 'Shougo/deoplete-lsp'
 
+# Nvim lsp client 上で Linter を動かす
+[[plugins]]
+repo = 'mfussenegger/nvim-lint'
+
 # vim 上でテスト
 [[plugins]]
 repo = 'vim-test/vim-test'
@@ -406,16 +412,6 @@ hook_source = '''
   let g:memolist_memo_suffix = 'md'
 '''
 
-# LSP Symbol をサイドバーで表示
-[[plugins]]
-repo = 'liuchengxu/vista.vim'
-hook_add = '''
-  let g:vista_sidebar_width = 40
-  let g:vista_default_executive = 'ctags'
-  let g:vista_echo_cursor_strategy = 'floating_win'
-  let g:vista_stay_on_open = 0
-'''
-
 # SQLフォーマッター
 [[plugins]]
 repo = 'mattn/vim-sqlfmt'
@@ -435,3 +431,6 @@ hook_add = '''
   let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
   "let g:auto_save_silent = 1  " do not display the auto-save notification
 '''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
