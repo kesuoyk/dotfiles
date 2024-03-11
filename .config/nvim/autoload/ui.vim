@@ -4,7 +4,7 @@ function! ui#statusline() abort
     return [
         \ '#%{winnr()} %<%f%m%r%h%w  %=',
         \ fileencoding,
-        \ filetype,
+        \ '%y',
         \ '[%l/%L,%c]'
         \ ]->join('')
 endfunction
@@ -21,12 +21,10 @@ function! ui#tabline() abort
     let s .= '%#TabLineFill#%T'
 
     " セッションを表示
-    if (v:this_session == '')
-        let session = 'No session'
-    else
+    if (v:this_session != '')
         let session = substitute(fnamemodify(v:this_session, ':t'), '\v\.vim', '', '')
+        let s .= '%=%#Normal#' . '[' . session . ']'
     endif
-    let s .= '%=%#Normal#' . '[' . session . ']'
 
     return s
 endfunction
