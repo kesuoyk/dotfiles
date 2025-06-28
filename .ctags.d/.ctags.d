@@ -1,1 +1,0 @@
-/Users/mono/dotfiles/.ctags.d

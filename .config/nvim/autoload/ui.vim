@@ -22,8 +22,12 @@ function! ui#tabline() abort
 
     " セッションを表示
     if (v:this_session != '')
-        let session = substitute(fnamemodify(v:this_session, ':t'), '\v\.vim', '', '')
-        let s .= '%=%#Normal#' . '[' . session . ']'
+        let session = substitute(
+                    \ fnamemodify(v:this_session, ':t'),
+                    \ '\v(\.session)?\.vim',
+                    \ '',
+                    \ '')
+        let s .= '%=%#TabLineSel#' . '[' . session . ']'
     endif
 
     return s
@@ -31,21 +35,17 @@ endfunction
 
 function! ui#tablabel(n, last) abort
     let s = ''
+    let buflist = tabpagebuflist(a:n)
 
     " タブページ番号の設定 (マウスクリック用)
     let s .= '%' . a:n . 'T'
 
+    let s .= a:n == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+
     " タブページ番号を表示
-    " let s .= '%#TabLineSel#'
-    let s .= a:n == tabpagenr() ? '%#TabLineSel#' : '%#Delimiter#'
     let s .= '#' . a:n . ' '
 
-    let buflist = tabpagebuflist(a:n)
-
     " カレントウィンドウのバッファ名を表示
-    let s .= a:n == tabpagenr()
-                \ ? '%#TabLineSel#'
-                \ : '%#TabLine#'
     let bn = bufname(buflist[tabpagewinnr(a:n) - 1])
     if bn == ''
         let s .= '[New]'
@@ -71,7 +71,7 @@ function! ui#tablabel(n, last) abort
 
     " 区切りを追加
     let s .= '%#TabLineFill#'
-    let s .= a:n == a:last ? '' : '  '
+    let s .= a:n == a:last ? '' : ' | '
 
     return s
 endfunction

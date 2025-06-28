@@ -8,6 +8,22 @@ if (filereadable('./.localrc.vim'))
     source ./.localrc.vim
 endif
 
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX) && getenv('TERM_PROGRAM') != 'Apple_Terminal')
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
 " ------------------
 "   プラグイン管理
 " ------------------
@@ -61,23 +77,68 @@ command! DeinClean :call s:deinClean()
 
 " nvim-lsp の設定
 lua << EOF
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.intelephense.setup{}
-require'lspconfig'.volar.setup{
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
-}
-require'lint'.linters_by_ft = {
-  markdown = {'eslint'}
-}
-EOF
+local lsp = require('lspconfig')
 
-"}}}
+lsp.ts_ls.setup{
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {
+    "typescript",
+    "javascript",
+    "vue",
+  },
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/opt/homebrew/lib/node_modules/@vue/typescript-plugin",
+        languages = {
+          "javascript",
+          "typescript",
+          "vue"
+        },
+      },
+    },
+    typescript = {
+      serverPath = "/opt/homebrew/lib/node_modules/typescript-language-server",
+      tsdk = "/opt/homebrew/lib/node_modules/typescript/lib",
+    },
+  },
+}
+
+lsp.volar.setup{
+  filetypes = {'typescript', 'javascript', 'vue', 'json'}
+}
+
+lsp.ruby_lsp.setup{
+--  init_options = {
+--    formatter = 'standard',
+--    linters = { 'standard' },
+--  },
+--  addonSettings = {
+--    ["Ruby LSP Rails"] = {
+--      enablePendingMigrationsPrompt = false,
+--    },
+--  },
+}
+
+lsp.eslint.setup{
+  flags = {
+    allow_incremental_sync = false,
+    debounce_text_changes = 1000,
+  },
+}
+
+EOF
 
 augroup plugin
     autocmd!
-    autocmd Filetype json :IndentGuidesDisable
-    autocmd BufWritePost * lua require('lint').try_lint()
+    " autocmd Filetype json :IndentGuidesDisable
+    autocmd Filetype json set conceallevel=0
 augroup END
+
+"}}}
 
 " --------------
 "   マッピング
@@ -88,10 +149,10 @@ augroup END
 nnoremap <silent> <Esc> :<C-u>nohlsearch<CR>
 
 " 次のバッファへ移動
-nnoremap <silent> <C-n> :<C-u>bn<CR>
+" nnoremap <silent> <C-n> :<C-u>bn<CR>
 
 " 前のバッファへ移動
-nnoremap <silent> <C-p> :<C-u>bp<CR>
+" nnoremap <silent> <C-p> :<C-u>bp<CR>
 
 " インサートモード中に横移動
 inoremap <C-b> <C-o>h
@@ -117,10 +178,14 @@ nnoremap ]q :<C-u>cnext<CR>
 nnoremap [q :<C-u>cprevious<CR>
 
 " LSP
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> ]d <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gd  <cmd>lua vim.diagnostic.open_float()<CR>
+nnoremap <silent> gn <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> ga <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gd <cmd>lua vim.diagnostic.open_float()<CR>
+
+tmap <C-¥> <C-\>
 
 "}}}
 
@@ -171,7 +236,11 @@ nnoremap <silent> <Leader>k :exe "resize " . "+8"<CR>
 nnoremap <silent> <Leader>j :exe "resize " . "-8"<CR>
 
 " vim-indent-guides
-nnoremap <silent> <Leader>ig :<C-u>IndentGuidesToggle<CR>
+nnoremap <silent> <Leader>ig <Plug>IndentGuidesToggle
+
+" fugitive
+nnoremap <silent> <Leader>g :<C-u>Git<CR>
+nnoremap <silent> <Leader>gq :<C-u>Git<CR>
 
 " vim-quickrun
 nnoremap <silent> <Leader>x :<C-u>QuickRun<CR>
@@ -192,9 +261,9 @@ nnoremap <silent> <Leader>so :<C-u>Denite outline<CR>
 nnoremap <silent> <Leader>sm :<C-u>Denite mark<CR>
 
 " memolist.vim
-nnoremap <Leader>mn :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| MemoNew<CR>
-nnoremap <Leader>ml :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| MemoList<CR>
-nnoremap <Leader>mg :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| MemoGrep<CR>
+nnoremap <Leader>mn :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| set nonumber \| MemoNew<CR>
+nnoremap <Leader>ml :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| set nonumber \| MemoList<CR>
+nnoremap <Leader>mg :vnew \| wincmd L \| vertical resize 50 \| set winfixwidth \| set nonumber \| MemoGrep<CR>
 
 " vim-test
 nnoremap <Leader>tn :<C-u>TestNearest<CR>
@@ -229,12 +298,13 @@ set undofile " 永続的Undo機能
 set diffopt+=iwhite " vimdiff のとき空白を無視
 set ambiwidth=double
 set virtualedit=all
+set background=dark
 
 augroup basic
     autocmd!
     " 参考: https://vim.fandom.com/wiki/Fix_syntax_highlighting
-    autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-    autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+    " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+    " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 augroup END
 
 " --- カーソル移動 ---
@@ -244,7 +314,6 @@ set sidescroll=1 " 左右スクロールは1文字ずつ行う
 
 " --- エンコーディング ---
 set encoding=utf8 " Vimが内部で用いるエンコーディング
-set termencoding=utf8 " 端末の出力に用いられるエンコーディング
 
 " --- 折りたたみ ---
 set foldopen-=search
@@ -293,13 +362,12 @@ set showmatch " 対応する括弧を強調表示
 set cursorline " カーソルラインの強調表示
 "set cursorcolumn " カーソルラインの強調表示（縦）
 set number " 行番号の表示
-set colorcolumn=80 " 縦のライン表示
+set colorcolumn=100 " 縦のライン表示
 set showcmd " 入力中のコマンドを表示
 set list " 不可視文字を表示
 set listchars=tab:>-,trail:-
 
 " --- 検索 / 置換 ---
-" set shortmess+=I " 起動時の :intrto を非表示
 set hlsearch " 検索キーワードをハイライト
 set incsearch " インクリメンタル検索を有効化
 set ignorecase " case-insensitive で検索する
@@ -318,7 +386,7 @@ set tabline=%!ui#tabline()
 set splitbelow " 新しいウィンドウを下に開く
 set splitright " 新しいウィンドウを右に開く
 set winwidth=30 " ウィンドウの最小幅
-set winheight=20 " カレントウィンドウの最小の高さ
+set winheight=10 " カレントウィンドウの最小の高さ
 set winminheight=0 " ウィンドウの最小の高さ
 set noequalalways " ウィンドウを閉じたり開いたりした場合に、カレントウィンドウ以外の高さ、幅を整えない
 
