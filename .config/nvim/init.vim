@@ -77,9 +77,7 @@ command! DeinClean :call s:deinClean()
 
 " nvim-lsp の設定
 lua << EOF
-local lsp = require('lspconfig')
-
-lsp.ts_ls.setup{
+vim.lsp.config('ts_ls', {
   on_init = on_init,
   on_attach = on_attach,
   capabilities = capabilities,
@@ -105,13 +103,13 @@ lsp.ts_ls.setup{
       tsdk = "/opt/homebrew/lib/node_modules/typescript/lib",
     },
   },
-}
+})
 
-lsp.volar.setup{
-  filetypes = {'typescript', 'javascript', 'vue', 'json'}
-}
+--vim.lsp.config('volar', {
+--  filetypes = {'typescript', 'javascript', 'vue', 'json'}
+--})
 
-lsp.ruby_lsp.setup{
+vim.lsp.config('ruby_lsp', {
 --  init_options = {
 --    formatter = 'standard',
 --    linters = { 'standard' },
@@ -121,14 +119,14 @@ lsp.ruby_lsp.setup{
 --      enablePendingMigrationsPrompt = false,
 --    },
 --  },
-}
+})
 
-lsp.eslint.setup{
+vim.lsp.config('eslint', {
   flags = {
     allow_incremental_sync = false,
     debounce_text_changes = 1000,
   },
-}
+})
 
 EOF
 
@@ -163,6 +161,10 @@ nnoremap k gk
 nnoremap gk k
 nnoremap j gj
 nnoremap gj jk
+
+" ウィンドウ切り替え
+nnoremap <C-p> <C-w><S-w>
+nnoremap <C-n> <C-w><C-w>
 
 " コマンドラインで Emacs 風に移動
 cnoremap <C-p> <Up>

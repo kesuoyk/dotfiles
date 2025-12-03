@@ -413,6 +413,12 @@ hook_add = '''
 [[plugins]]
 repo = 'github/copilot.vim'
 
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'CopilotC-Nvim/CopilotChat.nvim'
+
 # スライド機能を追加
 [[plugins]]
 repo = 'sotte/presenting.nvim'

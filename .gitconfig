@@ -30,6 +30,7 @@
     co = checkout
     com = checkout master
     cob = checkout -b
+    cod = checkout develop
     c = commit
     ca = commit --all
     can = commit --all --amend
