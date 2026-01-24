@@ -293,7 +293,6 @@ hook_add = '''
   call denite#custom#var('grep', 'max_path_length', 200)
   call denite#custom#var('grep', 'command', ['pt'])
   call denite#custom#var('grep', 'default_opts', [
-    \ '-e',
     \ '--nogroup',
     \ '--nocolor',
     \ '--smart-case',

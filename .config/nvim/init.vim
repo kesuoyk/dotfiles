@@ -128,6 +128,10 @@ vim.lsp.config('eslint', {
   },
 })
 
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('ruby_lsp')
+vim.lsp.enable('eslint')
+
 EOF
 
 augroup plugin
