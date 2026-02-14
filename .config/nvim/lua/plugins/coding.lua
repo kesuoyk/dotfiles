@@ -1,5 +1,5 @@
 return {
-  { "L3MON4D3/LuaSnip" },
+  { "L3MON4D3/LuaSnip", lazy = true },
   {
     "hrsh7th/nvim-cmp",
     dependencies = {

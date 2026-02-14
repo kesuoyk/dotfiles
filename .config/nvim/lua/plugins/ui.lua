@@ -37,7 +37,7 @@ return {
       })
     end,
   },
-  { "numToStr/Comment.nvim", opts = {} },
+  { "numToStr/Comment.nvim", event = "VeryLazy", opts = {} },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -48,11 +48,17 @@ return {
       enable_tailwind = true,
     },
   },
-  { "ntpeters/vim-better-whitespace" },
-  { "junegunn/vim-easy-align" },
-  { "michaeljsmith/vim-indent-object" },
+  { "ntpeters/vim-better-whitespace", event = { "BufReadPost", "BufNewFile" } },
+  {
+    "junegunn/vim-easy-align",
+    keys = {
+      { "gA", "<Plug>(EasyAlign)", mode = { "n", "x" } },
+    },
+  },
+  { "michaeljsmith/vim-indent-object", event = "VeryLazy" },
   {
     "tpope/vim-surround",
+    event = "VeryLazy",
     init = function()
       vim.g["surround_" .. vim.fn.char2nr("「")] = "「 \r 」"
       vim.g["surround_" .. vim.fn.char2nr("」")] = "「\r」"
@@ -66,9 +72,15 @@ return {
       vim.g["surround_" .. vim.fn.char2nr("｝")] = "｛\r｝"
     end,
   },
-  { "tpope/vim-abolish" },
+  { "tpope/vim-abolish", cmd = { "Subvert", "S", "Abolish" }, keys = { "cr", "co", "cn" } },
   {
     "glidenote/memolist.vim",
+    cmd = { "MemoNew", "MemoList", "MemoGrep" },
+    keys = {
+      { "<leader>mn", "<cmd>vnew | wincmd L | vertical resize 50 | set winfixwidth | set nonumber | MemoNew<CR>" },
+      { "<leader>ml", "<cmd>vnew | wincmd L | vertical resize 50 | set winfixwidth | set nonumber | MemoList<CR>" },
+      { "<leader>mg", "<cmd>vnew | wincmd L | vertical resize 50 | set winfixwidth | set nonumber | MemoGrep<CR>" },
+    },
     init = function()
       vim.g.memolist_memo_suffix = "md"
     end,

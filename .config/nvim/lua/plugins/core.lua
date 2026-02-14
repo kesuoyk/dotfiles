@@ -1,5 +1,5 @@
 return {
-  { "morhetz/gruvbox", priority = 1000, config = function() vim.cmd.colorscheme("gruvbox") end },
+  { "morhetz/gruvbox", lazy = false, priority = 1000, config = function() vim.cmd.colorscheme("gruvbox") end },
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "nvim-telescope/telescope.nvim",
