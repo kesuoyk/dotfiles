@@ -4,16 +4,10 @@
 !/.gitignore_global
 !/.tigrc
 !/.tigrc
-!/.tmux.conf
-!/.vimrc
 !/.com.googlecode.iterm2.plist
 !/.setup.sh
 !/.ctags.d
 
 !/.config/
 /.config/*
-!/.config/dein/
-!/.config/fish/
-/.config/fish/*
-!/.config/fish/config.fish
 !/.config/nvim/
