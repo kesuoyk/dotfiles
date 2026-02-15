@@ -39,5 +39,26 @@
     default = current
     autoSetupRemote = true
 
+[alias]
+    st = status --short --branch
+    s = status
+    a = add
+    aa = add --all
+    c = commit
+    cm = commit --message
+    ca = commit --amend
+    co = checkout
+    sw = switch
+    br = branch
+    last = log --max-count=1 --stat
+    lg = log --oneline --graph --decorate --all
+    unstage = restore --staged
+    rs = restore
+    d = diff
+    dc = diff --cached
+    p = push
+    pl = pull --ff-only
+    f = fetch --prune
+
 [init]
     defaultBranch = main

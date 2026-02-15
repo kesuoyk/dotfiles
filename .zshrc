@@ -29,6 +29,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 autoload -Uz bashcompinit
 bashcompinit
 
+# git ショートカット
+alias g='git'
+
 # プロンプトの表示形式と色:
 # - ローカル: user::cwd[branch]%
 # - SSH時:   user@host::cwd[branch]%
