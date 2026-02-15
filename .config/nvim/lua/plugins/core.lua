@@ -4,6 +4,35 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      defaults = {
+        file_ignore_patterns = {
+          "node_modules/",
+          "%.git/",
+          "dist/",
+          "build/",
+          "%.next/",
+          "coverage/",
+          "vendor/bundle/",
+        },
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--glob=!**/node_modules/**",
+          "--glob=!**/.git/**",
+          "--glob=!**/dist/**",
+          "--glob=!**/build/**",
+          "--glob=!**/.next/**",
+          "--glob=!**/coverage/**",
+          "--glob=!**/vendor/bundle/**",
+        },
+      },
+    },
     keys = {
       { "<leader>sf", "<cmd>Telescope find_files<CR>" },
       { "<leader>sg", "<cmd>Telescope live_grep<CR>" },
