@@ -5,6 +5,9 @@
 !/.gitconfig
 !/.gitignore
 !/.gitignore_global
+!/Brewfile
+!/README.md
+!/setup.sh
 !/.tigrc
 !/.zshrc
 

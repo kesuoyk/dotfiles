@@ -1,0 +1,7 @@
+brew "neovim"
+brew "fd"
+brew "tig"
+brew "ripgrep"
+brew "node"
+brew "ruby"
+brew "make"

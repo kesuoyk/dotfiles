@@ -1,34 +1,28 @@
-# nvim-next
-
-`lazy.nvim + Lua` ベースの Neovim 設定です。
-新規導入を前提に、必要な依存関係と初期セットアップ手順をまとめています。
+# Neovim Configurations
 
 ## Requirements
 
 以下のコマンドが `PATH` にあることを想定しています。
 
-- `nvim` (0.11+)
+- `nvim`
 - `git`
-- `rg` (ripgrep)
-- `node` / `npm` (Vue/TypeScript LSP 用)
-- `ruby` (ruby-lsp 用)
-- C コンパイラ (`cc`) と `make` (treesitter parser ビルド用)
+- `node` / `npm` - Vue/TypeScript LSP 用
+- `ruby` - ruby-lsp 用
+- Cコンパイラ (`cc`) と `make` - treesitter parser ビルド用
+- [rg](https://github.com/BurntSushi/ripgrep) - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) 用
+- [fd](https://github.com/sharkdp/fd) - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) 用
+
+依存導入は dotfiles ルートのセットアップスクリプトを使用
 
 ## Install
 
-1. 設定を配置
-
-```bash
-git clone <your-dotfiles-or-repo> ~/.config/nvim
-```
-
-2. Neovim を起動してプラグイン同期
+1. Neovim を起動してプラグイン同期
 
 ```vim
 :Lazy sync
 ```
 
-3. treesitter parser をインストール
+2. treesitter parser をインストール
 
 ```vim
 :TSUpdate
