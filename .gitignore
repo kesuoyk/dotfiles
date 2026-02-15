@@ -1,14 +1,14 @@
+# Deny-all by default, then explicitly allow tracked dotfiles.
 /*
+
+# Root-level dotfiles
 !/.gitconfig
 !/.gitignore
 !/.gitignore_global
 !/.tigrc
-!/.tigrc
 !/.zshrc
-!/.com.googlecode.iterm2.plist
-!/.setup.sh
-!/.ctags.d
 
+# Only keep Neovim config under .config
 !/.config/
 /.config/*
 !/.config/nvim/
