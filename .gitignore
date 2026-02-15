@@ -4,6 +4,7 @@
 !/.gitignore_global
 !/.tigrc
 !/.tigrc
+!/.zshrc
 !/.com.googlecode.iterm2.plist
 !/.setup.sh
 !/.ctags.d
