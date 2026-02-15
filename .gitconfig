@@ -1,39 +1,43 @@
 # This is Git's per-user configuration file.
 [user]
-	name = kesuoyk
+    name = kesuoyk
     email = 107860025+kesuoyk@users.noreply.github.com
-[push]
-    default = current
+
 [core]
     excludesfile = ~/.gitignore_global
     editor = nvim
+
 [color]
-    diff = auto
-    status = auto
-    branch = auto
+    ui = auto
+
 [diff]
     tool = nvimdiff
+
 [merge]
     tool = nvimdiff
-    conflictstyle = diff3
+    conflictstyle = zdiff3
+
 [difftool "nvimdiff"]
     cmd = "nvim -R -d -c \"wincmd l\" -d \"$LOCAL\" \"$REMOTE\""
+
 [mergetool "nvimdiff"]
-    cmd = "nvim -d -c \"4wincmd w | wincmd J\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"  \"$MERGED\""
-[http]
-    sslVerify = false
-[credintial]
-    helper = cache
+    cmd = "nvim -d -c \"4wincmd w | wincmd J\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" \"$MERGED\""
+
+[credential]
+    helper = cache --timeout=3600
+
 [status]
-    displaycommentprefix = true
-[filter "lfs"]
-    clean = git-lfs clean -- %f
-    smudge = git-lfs smudge -- %f
-    process = git-lfs filter-process
-    required = true
+    displayCommentPrefix = true
+
 [fetch]
     prune = true
+
 [pull]
-#	ff = only
+    ff = only
+
+[push]
+    default = current
+    autoSetupRemote = true
+
 [init]
-	defaultBranch = main
+    defaultBranch = main
