@@ -21,6 +21,14 @@ zstyle ':vcs_info:git:*' formats '%F{215}[%b]%f'
 precmd() { vcs_info }
 setopt prompt_subst
 
+# zsh 補完の有効化と補完体験の改善
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+autoload -Uz bashcompinit
+bashcompinit
+
 # プロンプトの表示形式と色:
 # - ローカル: user::cwd[branch]%
 # - SSH時:   user@host::cwd[branch]%
@@ -34,3 +42,7 @@ fi
 if command -v fzf >/dev/null 2>&1; then
   source <(fzf --zsh)
 fi
+
+# 右側プロンプトは使用しない
+RPROMPT=''
+RPS1=''
