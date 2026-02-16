@@ -25,6 +25,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.softtabstop = 2
 vim.opt.wildignore:append({ "**/node_modules/**", "**/.git/**", "**/vendor/**" })
+vim.opt.winminheight = 0
+vim.opt.winminwidth = 0
 
 local two_space = {
   "css",
