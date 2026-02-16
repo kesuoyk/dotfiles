@@ -49,3 +49,6 @@ fi
 # 右側プロンプトは使用しない
 RPROMPT=''
 RPS1=''
+
+# .zshrc.local が存在する場合は読み込む
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
