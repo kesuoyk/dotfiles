@@ -43,6 +43,7 @@
 - `ts_ls`
 - `vue_ls`
 - `ruby_lsp`
+- `lua_ls`
 
 ## Env Overrides
 
