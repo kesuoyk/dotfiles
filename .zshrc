@@ -52,3 +52,11 @@ RPS1=''
 
 # .zshrc.local が存在する場合は読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+# trash-cli is keg-only; expose trash-put explicitly.
+alias trash-put='/usr/local/opt/trash-cli/bin/trash-put'
+alias tr='trash-put'
+
+# Ensure keg-only trash-cli commands (trash-list, trash-put, etc.) are on PATH.
+[[ -d /usr/local/opt/trash-cli/bin ]] && path=(/usr/local/opt/trash-cli/bin "$path[@]")
+[[ -d /opt/homebrew/opt/trash-cli/bin ]] && path=(/opt/homebrew/opt/trash-cli/bin "$path[@]")
