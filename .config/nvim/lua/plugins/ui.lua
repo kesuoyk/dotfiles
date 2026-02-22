@@ -87,7 +87,7 @@ return {
   },
   {
     "mattn/emmet-vim",
-    ft = { "php", "blade", "html", "vue", "tsx", "typescriptreact", "smarty" },
+    ft = { "html", "vue", "tsx", "typescriptreact" },
     init = function()
       vim.g.user_emmet_mode = "a"
       vim.g.user_emmet_leader_key = "<C-Y>"
