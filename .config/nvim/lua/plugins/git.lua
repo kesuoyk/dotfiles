@@ -11,7 +11,7 @@ return {
   { "yaktak/sestry.vim", event = "VeryLazy" },
   {
     "ToruIwashita/git-switcher.vim",
-    cmd = { "Gsw", "Gswc", "Gswm" },
+    lazy = false,
     init = function()
       vim.g.gsw_save_session_confirm = "yes"
       vim.g.gsw_autoload_session = "confirm"
