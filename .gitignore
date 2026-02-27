@@ -10,6 +10,7 @@
 !/setup.sh
 !/.tigrc
 !/.zshrc
+!/.zprofile
 
 # Only keep Neovim config under .config
 !/.config/
