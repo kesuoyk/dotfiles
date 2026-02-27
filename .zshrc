@@ -1,20 +1,3 @@
-# PATH設定:
-# - ~/.local/bin と Homebrew を優先
-# - 既存PATHは保持
-# - npm global bin は存在時のみ末尾追加
-typeset -U path
-path=(
-  "$HOME/.local/bin"
-  /opt/homebrew/bin
-  "$path[@]"
-)
-
-if command -v npm >/dev/null 2>&1; then
-  path+=("$(npm prefix --location=global)/bin")
-fi
-
-export PATH
-
 # vcs_info で Git ブランチ名をプロンプト表示
 autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats '%F{215}[%b]%f'
@@ -56,7 +39,3 @@ RPS1=''
 # trash-cli is keg-only; expose trash-put explicitly.
 alias trash-put='/usr/local/opt/trash-cli/bin/trash-put'
 alias tr='trash-put'
-
-# Ensure keg-only trash-cli commands (trash-list, trash-put, etc.) are on PATH.
-[[ -d /usr/local/opt/trash-cli/bin ]] && path=(/usr/local/opt/trash-cli/bin "$path[@]")
-[[ -d /opt/homebrew/opt/trash-cli/bin ]] && path=(/opt/homebrew/opt/trash-cli/bin "$path[@]")
