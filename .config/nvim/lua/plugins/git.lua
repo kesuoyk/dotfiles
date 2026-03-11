@@ -1,6 +1,7 @@
 return {
   {
     "tpope/vim-fugitive",
+    dependencies = { "tpope/vim-rhubarb"},
     cmd = { "Git", "G", "Gdiffsplit", "Gvdiffsplit", "Gwrite", "Gread", "Gblame" },
     keys = {
       { "<leader>g", "<cmd>Git<CR>" },

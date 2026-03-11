@@ -14,6 +14,11 @@ bashcompinit
 
 # git ショートカット
 alias g='git'
+alias git-prune-branches='git fetch --prune && git branch -vv | grep ": gone]" | awk "{print \$1}" | xargs git branch -D'
+git-new-branch-from-default() {
+  local default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+  git switch -c "$1" "origin/${default_branch}"
+}
 
 # プロンプトの表示形式と色:
 # - ローカル: user::cwd[branch]%
