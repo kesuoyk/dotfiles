@@ -29,6 +29,6 @@
   "vim-indent-object": { "branch": "master", "commit": "8ab36d5ec2a3a60468437a95e142ce994df598c6" },
   "vim-rhubarb": { "branch": "master", "commit": "5496d7c94581c4c9ad7430357449bb57fc59f501" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
-  "vim-test": { "branch": "master", "commit": "9b063a510635c052af087c470039d80843ab9929" },
+  "vim-test": { "branch": "master", "commit": "e4d4fa7f5ce354e7df473550080d9e78207ef4a0" },
   "vimdoc-ja": { "branch": "master", "commit": "98de395c59f84c9d9afdba0cb1279e235f0e2d7b" }
 }
