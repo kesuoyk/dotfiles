@@ -40,7 +40,7 @@ git-new-branch-from-default() {
 }
 
 alias cl="claude"
-alias cld="mkdir -p ~/claude_default_workspace && cd ~/claude_default_workspace && claude"
+cld() { mkdir -p ~/claude_default_workspace && (cd ~/claude_default_workspace && claude "$@") }
 
 # `trash-cli` はkeg-onlyのため、`trash-put` を明示的にPATHに通す
 alias trash-put='/usr/local/opt/trash-cli/bin/trash-put'
