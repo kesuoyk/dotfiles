@@ -56,8 +56,9 @@
     rs = restore
     d = diff
     dc = diff --cached
-    p = push
+    ps = push
     pl = pull --ff-only
+    rb = rebase
     f = fetch --prune
 
 [init]
