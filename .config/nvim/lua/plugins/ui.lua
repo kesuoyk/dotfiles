@@ -1,5 +1,10 @@
 return {
   {
+    "f-person/auto-dark-mode.nvim",
+    lazy=false,
+    opts = {}
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     build = ":TSUpdate",
