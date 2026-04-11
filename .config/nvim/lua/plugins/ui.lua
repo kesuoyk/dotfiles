@@ -106,6 +106,17 @@ return {
     end,
   },
   {
+    "kibi2/tirenvi.nvim",
+    ft = { "csv", "tsv" },
+    config = function()
+      require("tirenvi").setup()
+      vim.keymap.set({ 'n', 'o', 'x' }, '<leader>tf', require('tirenvi').motion.f, { expr = true })
+      vim.keymap.set({ 'n', 'o', 'x' }, '<leader>tF', require('tirenvi').motion.F, { expr = true })
+      vim.keymap.set({ 'n', 'o', 'x' }, '<leader>tt', require('tirenvi').motion.t, { expr = true })
+      vim.keymap.set({ 'n', 'o', 'x' }, '<leader>tT', require('tirenvi').motion.T, { expr = true })
+    end,
+  },
+  {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     ft = "markdown",
