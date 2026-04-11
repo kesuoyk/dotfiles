@@ -49,6 +49,7 @@ return {
         ["-"] = false,
         ["<CR>"] = "actions.select",
         ["<C-l>"] = "actions.refresh",
+        ["gx"] = "actions.open_external",
       },
     },
     keys = {
