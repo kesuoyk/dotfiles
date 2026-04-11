@@ -126,6 +126,7 @@ return {
     init = function()
       vim.g.mkdp_auto_close = 0
       vim.g.mkdp_combine_preview = 1
+      vim.g.mkdp_browser = vim.env.NVIM_MKDP_BROWSER or ''
     end
   },
 }
