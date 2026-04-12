@@ -149,6 +149,12 @@ return {
         on_attach = on_attach,
       })
       vim.lsp.enable("ruby_lsp")
+
+      vim.lsp.config("tailwindcss", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+      vim.lsp.enable("tailwindcss")
     end,
   },
 }
