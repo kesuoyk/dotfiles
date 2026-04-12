@@ -17,4 +17,13 @@ fi
 
 echo "Installing dependencies from $BREWFILE ..."
 brew bundle --file "$BREWFILE"
+
+echo "Installing global npm packages ..."
+npm install -g \
+  typescript \
+  typescript-language-server \
+  @volar/vue-language-server \
+  @vue/typescript-plugin \
+  @tailwindcss/language-server
+
 echo "Done."
