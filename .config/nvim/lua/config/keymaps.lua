@@ -71,6 +71,24 @@ map("n", "<leader>e.", function()
   require("oil").open(vim.fn.expand("%:p:h"))
 end, { silent = true })
 
+-- Copy file path and line(s) to clipboard for Claude Code
+map("n", "<leader>cy", function()
+  local path = vim.fn.expand("%:p")
+  local line = vim.fn.line(".")
+  vim.fn.setreg("+", path .. ":" .. line)
+  print("Copied: " .. path .. ":" .. line)
+end, { desc = "Copy file:line to clipboard" })
+
+map("v", "<leader>cy", function()
+  local path = vim.fn.expand("%:p")
+  local s = vim.fn.line("v")
+  local e = vim.fn.line(".")
+  if s > e then s, e = e, s end
+  local ref = s == e and (path .. ":" .. s) or (path .. ":" .. s .. "-" .. e)
+  vim.fn.setreg("+", ref)
+  print("Copied: " .. ref)
+end, { desc = "Copy file:line range to clipboard" })
+
 map("n", "<leader>sb", "<cmd>Telescope buffers<CR>", { silent = true })
 map("n", "<leader>sc", "<cmd>Telescope commands<CR>", { silent = true })
 map("n", "<leader>sh", "<cmd>Telescope command_history<CR>", { silent = true })
