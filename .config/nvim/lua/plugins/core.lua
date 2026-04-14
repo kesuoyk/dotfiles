@@ -5,6 +5,11 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
+      pickers = {
+        find_files = {
+          hidden = true,
+        },
+      },
       defaults = {
         file_ignore_patterns = {
           "node_modules/",
@@ -23,6 +28,7 @@ return {
           "--line-number",
           "--column",
           "--smart-case",
+          "--hidden",
           "--glob=!**/node_modules/**",
           "--glob=!**/.git/**",
           "--glob=!**/dist/**",
