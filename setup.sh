@@ -24,6 +24,7 @@ npm install -g \
   typescript-language-server \
   @volar/vue-language-server \
   @vue/typescript-plugin \
-  @tailwindcss/language-server
+  @tailwindcss/language-server \
+  @anthropic-ai/claude-code
 
 echo "Done."
