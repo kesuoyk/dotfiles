@@ -1,5 +1,6 @@
 brew "neovim"
 brew "tree-sitter"
+brew "tree-sitter-cli"
 brew "fd"
 brew "tig"
 brew "ripgrep"

@@ -60,7 +60,7 @@ git-new-branch-from-default() {
   git switch -c "$1" "origin/${default_branch}"
 }
 
-alias cl="claude"
+alias cl="claude --enable-auto-mode"
 cld() { mkdir -p ~/claude_default_workspace && (cd ~/claude_default_workspace && claude "$@") }
 
 # `trash-cli` はkeg-onlyのため、`trash-put` を明示的にPATHに通す
