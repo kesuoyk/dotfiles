@@ -27,4 +27,12 @@ npm install -g \
   @tailwindcss/language-server \
   @anthropic-ai/claude-code
 
+echo "Installing Ruby via mise and global gems ..."
+if ! command -v mise >/dev/null 2>&1; then
+  echo "Error: mise not found in PATH after brew bundle." >&2
+  exit 1
+fi
+mise use -g ruby@3.4.4
+mise exec ruby@3.4.4 -- gem install ruby-lsp
+
 echo "Done."

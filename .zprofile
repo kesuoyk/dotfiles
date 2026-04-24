@@ -20,6 +20,10 @@ fi
 [[ -d /usr/local/opt/trash-cli/bin ]] && path=(/usr/local/opt/trash-cli/bin "$path[@]")
 [[ -d /opt/homebrew/opt/trash-cli/bin ]] && path=(/opt/homebrew/opt/trash-cli/bin "$path[@]")
 
+# mise の shims を PATH に通す (Neovim など非対話的に起動されたプロセスでも
+# プロジェクトの .ruby-version / .mise.toml に沿った Ruby などを解決できるようにする)
+[[ -d "$HOME/.local/share/mise/shims" ]] && path=("$HOME/.local/share/mise/shims" "$path[@]")
+
 export PATH
 
 # 端末固有の上書き設定があれば読み込む
