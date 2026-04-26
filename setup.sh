@@ -22,7 +22,7 @@ echo "Installing global npm packages ..."
 npm install -g \
   typescript \
   typescript-language-server \
-  @volar/vue-language-server \
+  @vue/language-server \
   @vue/typescript-plugin \
   @tailwindcss/language-server \
   @anthropic-ai/claude-code
