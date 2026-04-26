@@ -51,22 +51,64 @@ return {
         return "/usr/local/lib/node_modules"
       end
 
-      local global_node_modules = detect_global_node_modules()
-      local vue_typescript_plugin = env_nonempty("NVIM_VUE_TYPESCRIPT_PLUGIN")
-        or (global_node_modules .. "/@vue/typescript-plugin")
-      local typescript_tsdk = env_nonempty("NVIM_TYPESCRIPT_TSDK")
-        or (global_node_modules .. "/typescript/lib")
-
-      local ts_ls_init_options = {}
-      if path_exists(vue_typescript_plugin) then
-        ts_ls_init_options.plugins = {
-          {
-            name = "@vue/typescript-plugin",
-            location = vue_typescript_plugin,
-            languages = { "javascript", "typescript", "vue" },
-          },
-        }
+      local function first_existing_path(candidates)
+        for _, candidate in ipairs(candidates) do
+          if path_exists(candidate) then
+            return candidate
+          end
+        end
+        return nil
       end
+
+      local function find_upward(startpath, target)
+        local start = startpath or vim.uv.cwd()
+        local found = vim.fs.find(target, {
+          upward = true,
+          path = start,
+        })[1]
+
+        return found
+      end
+
+      local function project_root(root_dir)
+        local package_json = find_upward(root_dir, "package.json")
+        if package_json ~= nil then
+          return vim.fs.dirname(package_json)
+        end
+      end
+
+      local function prefix_paths(prefixes, suffixes)
+        local paths = {}
+        for _, prefix in ipairs(prefixes) do
+          for _, suffix in ipairs(suffixes) do
+            table.insert(paths, prefix .. suffix)
+          end
+        end
+        return paths
+      end
+
+      local function resolve_workspace_path(env_name, root_dir, project_suffixes, global_suffixes, global_node_modules)
+        local from_env = env_nonempty(env_name)
+        if from_env ~= nil then
+          return from_env
+        end
+
+        local root = project_root(root_dir)
+        if root ~= nil then
+          local project_path = first_existing_path(prefix_paths({ root }, project_suffixes))
+          if project_path ~= nil then
+            return project_path
+          end
+        end
+
+        return first_existing_path(prefix_paths({
+          global_node_modules,
+          "/opt/homebrew/lib/node_modules",
+          "/usr/local/lib/node_modules",
+        }, global_suffixes))
+      end
+
+      local global_node_modules = detect_global_node_modules()
 
       vim.lsp.config('lua_ls', {
         on_init = function(client)
@@ -120,6 +162,33 @@ return {
       vim.lsp.config("ts_ls", {
         capabilities = capabilities,
         on_attach = on_attach,
+        before_init = function(_, config)
+          local vue_typescript_plugin = resolve_workspace_path(
+            "NVIM_VUE_TYPESCRIPT_PLUGIN",
+            config.root_dir,
+            {
+              "/node_modules/@vue/typescript-plugin",
+              "/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
+            },
+            {
+              "/@vue/typescript-plugin",
+              "/@vue/language-server/node_modules/@vue/typescript-plugin",
+            },
+            global_node_modules
+          )
+          config.init_options = config.init_options or {}
+          config.init_options.plugins = nil
+
+          if vue_typescript_plugin ~= nil then
+            config.init_options.plugins = {
+              {
+                name = "@vue/typescript-plugin",
+                location = vue_typescript_plugin,
+                languages = { "javascript", "typescript", "vue" },
+              },
+            }
+          end
+        end,
         filetypes = {
           "javascript",
           "javascriptreact",
@@ -129,18 +198,24 @@ return {
           "typescript.tsx",
           "vue",
         },
-        init_options = ts_ls_init_options,
       })
       vim.lsp.enable("ts_ls")
 
       vim.lsp.config("vue_ls", {
         capabilities = capabilities,
         on_attach = on_attach,
-        init_options = {
-          typescript = {
-            tsdk = path_exists(typescript_tsdk) and typescript_tsdk or "",
-          },
-        },
+        before_init = function(_, config)
+          local tsdk = resolve_workspace_path(
+            "NVIM_TYPESCRIPT_TSDK",
+            config.root_dir,
+            { "/node_modules/typescript/lib" },
+            { "/typescript/lib" },
+            global_node_modules
+          )
+          config.init_options = config.init_options or {}
+          config.init_options.typescript = config.init_options.typescript or {}
+          config.init_options.typescript.tsdk = tsdk or ""
+        end,
       })
       vim.lsp.enable("vue_ls")
 
