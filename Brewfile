@@ -6,12 +6,21 @@ brew "tig"
 brew "ripgrep"
 brew "node"
 brew "mise"
-# mise 経由でビルドした Ruby が動的リンクしているため、cleanup 対象から外す
+
+# mise 経由でビルドした Ruby が動的リンクしているため、以下 3 つは cleanup 対象から外す
 brew "gmp"
 brew "libyaml"
 brew "openssl@3"
+
 brew "make"
 brew "trash-cli"
 brew "js-beautify"
 brew "gemini-cli"
+brew "docker"
+brew "docker-compose"
+brew "gh"
+brew "fzf"
+brew "git"
+brew "jq"
+brew "tree"
 cask "codex"
