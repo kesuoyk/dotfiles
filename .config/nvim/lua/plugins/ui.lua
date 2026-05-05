@@ -4,33 +4,33 @@ return {
     lazy=false,
     opts = {}
   },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    lazy = false,
-    build = ":TSUpdate",
-    config = function()
-      local parsers = {
-        "bash", "css", "html", "javascript", "json", "lua",
-        "markdown", "ruby", "toml", "typescript", "vim", "vimdoc", "vue", "yaml",
-      }
-      local installed = require("nvim-treesitter.config").get_installed()
-      local to_install = vim.tbl_filter(function(p)
-        return not vim.tbl_contains(installed, p)
-      end, parsers)
-      if #to_install > 0 then
-        require("nvim-treesitter").install(to_install)
-      end
-
-      vim.api.nvim_create_autocmd("FileType", {
-        group = vim.api.nvim_create_augroup("NvimTreesitterStart", { clear = true }),
-        callback = function(args)
-          pcall(vim.treesitter.start, args.buf)
-          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end,
-      })
-    end,
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   branch = "main",
+  --   lazy = false,
+  --   build = ":TSUpdate",
+  --   config = function()
+  --     local parsers = {
+  --       "bash", "css", "html", "javascript", "json", "lua",
+  --       "markdown", "ruby", "toml", "typescript", "vim", "vimdoc", "vue", "yaml",
+  --     }
+  --     local installed = require("nvim-treesitter.config").get_installed()
+  --     local to_install = vim.tbl_filter(function(p)
+  --       return not vim.tbl_contains(installed, p)
+  --     end, parsers)
+  --     if #to_install > 0 then
+  --       require("nvim-treesitter").install(to_install)
+  --     end
+  --
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       group = vim.api.nvim_create_augroup("NvimTreesitterStart", { clear = true }),
+  --       callback = function(args)
+  --         pcall(vim.treesitter.start, args.buf)
+  --         vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  --       end,
+  --     })
+  --   end,
+  -- },
   { "numToStr/Comment.nvim", event = "VeryLazy", opts = {} },
   { "windwp/nvim-autopairs", event = "InsertEnter", opts = {} },
   {

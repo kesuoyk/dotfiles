@@ -19,18 +19,4 @@ return {
       vim.g.gsw_autodelete_sessions_if_branch_not_exists = "confirm"
     end,
   },
-  { "github/copilot.vim", event = "InsertEnter" },
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = {
-      "CopilotChat",
-      "CopilotChatOpen",
-      "CopilotChatToggle",
-      "CopilotChatExplain",
-      "CopilotChatReview",
-      "CopilotChatFix",
-    },
-    opts = {},
-  },
 }
