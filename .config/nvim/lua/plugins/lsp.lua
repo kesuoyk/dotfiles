@@ -212,7 +212,13 @@ return {
       vim.lsp.enable("vue_ls")
 
       vim.lsp.config("ruby_lsp", {
-        cmd = { "bundle", "exec", "ruby-lsp" },
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start(
+            { "bundle", "exec", "ruby-lsp" },
+            dispatchers,
+            config and config.root_dir and { cwd = config.cmd_cwd or config.root_dir }
+          )
+        end,
         capabilities = capabilities,
         on_attach = on_attach,
       })
