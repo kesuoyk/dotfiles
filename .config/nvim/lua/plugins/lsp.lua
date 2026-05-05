@@ -51,6 +51,14 @@ return {
         return "/usr/local/lib/node_modules"
       end
 
+      local function mise_npm_package_paths(package_name)
+        return vim.fn.glob(
+          vim.fn.expand("~/.local/share/mise/installs/*/*/lib/node_modules/" .. package_name),
+          true,
+          true
+        )
+      end
+
       local function first_existing_path(candidates)
         for _, candidate in ipairs(candidates) do
           if path_exists(candidate) then
@@ -101,11 +109,18 @@ return {
           end
         end
 
-        return first_existing_path(prefix_paths({
+        local candidates = prefix_paths({
           global_node_modules,
           "/opt/homebrew/lib/node_modules",
           "/usr/local/lib/node_modules",
-        }, global_suffixes))
+        }, global_suffixes)
+
+        for _, suffix in ipairs(global_suffixes) do
+          local package_name = suffix:gsub("^/", "")
+          vim.list_extend(candidates, mise_npm_package_paths(package_name))
+        end
+
+        return first_existing_path(candidates)
       end
 
       local global_node_modules = detect_global_node_modules()

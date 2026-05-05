@@ -16,3 +16,5 @@
 !/.config/
 /.config/*
 !/.config/nvim/
+!/.config/mise/
+!/.config/mise/config.toml

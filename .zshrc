@@ -1,6 +1,7 @@
 # vcs_info で Git ブランチ名をプロンプト表示
 autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats '%F{215}[%b]%f'
+
 # macOS のダーク/ライトモードに応じてプロンプトの色を切り替える
 # defaults read の呼び出しを3秒間キャッシュして負荷を軽減
 zmodload zsh/datetime
@@ -60,12 +61,8 @@ git-new-branch-from-default() {
   git switch -c "$1" "origin/${default_branch}"
 }
 
-alias cl="claude --enable-auto-mode"
+alias cl="claude"
 cld() { mkdir -p ~/claude_default_workspace && (cd ~/claude_default_workspace && claude "$@") }
-
-# `trash-cli` はkeg-onlyのため、`trash-put` を明示的にPATHに通す
-alias trash-put='/usr/local/opt/trash-cli/bin/trash-put'
-alias tr='trash-put'
 
 # 端末固有の上書き設定があれば読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

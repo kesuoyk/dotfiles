@@ -1,0 +1,11 @@
+[tools]
+node = "latest"
+pnpm = "latest"
+ruby = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:@vue/language-server" = "latest"
+"npm:@vue/typescript-plugin" = "latest"
+"npm:@tailwindcss/language-server" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@openai/codex" = "latest"

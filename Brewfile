@@ -1,26 +1,10 @@
-brew "neovim"
-brew "tree-sitter"
-brew "tree-sitter-cli"
-brew "fd"
-brew "tig"
-brew "ripgrep"
-brew "node"
 brew "mise"
-
-# mise 経由でビルドした Ruby が動的リンクしているため、以下 3 つは cleanup 対象から外す
-brew "gmp"
-brew "libyaml"
-brew "openssl@3"
-
-brew "make"
-brew "trash-cli"
-brew "js-beautify"
-brew "gemini-cli"
-brew "docker"
-brew "docker-compose"
+brew "neovim"
+brew "tig"
 brew "gh"
 brew "fzf"
-brew "git"
-brew "jq"
 brew "tree"
-cask "codex"
+brew "jq"
+brew "js-beautify"
+brew "fd"          # Telescope.nvim 用
+brew "ripgrep"     # Telescope.nvim 用

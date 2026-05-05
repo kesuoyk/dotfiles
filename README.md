@@ -1,12 +1,10 @@
 # dotfiles
 
-このリポジトリは、個人開発環境の dotfiles を管理します。
-現在は以下を主に管理対象としています。
+## Tool Management
 
-- Git (`.gitconfig`, `.gitignore_global`)
-- Tig (`.tigrc`)
-- Zsh (`.zshrc`)
-- Neovim (`.config/nvim/`)
+- Homebrew: macOS アプリ、GUI アプリ、ネイティブ CLI、mise 自体
+- mise: Node.js / pnpm / Ruby などのランタイム、グローバル開発 CLI
+- pnpm: JavaScript / TypeScript プロジェクトごとの依存関係
 
 ## Setup
 
@@ -16,13 +14,7 @@
 bash setup.sh
 ```
 
-導入確認:
-
-```bash
-brew bundle check --file Brewfile
-```
-
-## Neovim 詳細
+## Neovim
 
 Neovim 設定の詳細は以下を参照:
 
