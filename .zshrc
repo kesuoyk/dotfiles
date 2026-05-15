@@ -63,6 +63,7 @@ git-new-branch-from-default() {
 
 alias cl="claude"
 cld() { mkdir -p ~/claude_default_workspace && (cd ~/claude_default_workspace && claude "$@") }
+cldcd() { mkdir -p ~/claude_default_workspace && cd ~/claude_default_workspace && claude "$@" }
 
 # 端末固有の上書き設定があれば読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
