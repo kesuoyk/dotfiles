@@ -17,7 +17,10 @@ Record progress against an existing task without forcing the user to hand-edit t
 
 ## Resolution
 
-1. Open `~/claude_default_workspace/tasks/tasks.md` (or `$TASKS_FILE` if set)
+1. Resolve the tasks index file in this order:
+   1. The path passed via a `--tasks-file <path>` argument, if present
+   2. The value of `$CLAUDE_TASKS_FILE` if set
+   3. Ask the user for the path. Do not fall back to a hardcoded default
 2. Locate the row matching the identifier:
    - If the identifier looks like a row ID (regex `^T\d+$`), match the ID column
    - Otherwise match by exact URL substring against any URL in the row

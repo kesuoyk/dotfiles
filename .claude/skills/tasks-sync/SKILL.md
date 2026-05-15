@@ -24,7 +24,10 @@ URLs outside the supported set are reported as "unsupported provider" in the fin
 
 ## Workflow
 
-1. Resolve the target file: use `$1` if provided, otherwise `~/claude_default_workspace/tasks/tasks.md`
+1. Resolve the target file in this order:
+   1. The path passed as the first argument
+   2. The value of `$CLAUDE_TASKS_FILE` if set
+   3. Ask the user for the path. Do not fall back to a hardcoded default
 2. Read the file and extract every supported tracker URL. If one line contains multiple URLs, treat the entire line as one "entry" and fetch each URL within it
 3. Fetch state for all extracted issues/PRs **in parallel** via `gh`:
    - issue: `gh issue view <n> --repo <owner>/<repo> --json number,state,closedAt,title`

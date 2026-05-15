@@ -65,5 +65,9 @@ alias cl="claude"
 cld() { mkdir -p ~/claude_default_workspace && (cd ~/claude_default_workspace && claude "$@") }
 cldcd() { mkdir -p ~/claude_default_workspace && cd ~/claude_default_workspace && claude "$@" }
 
+# Claude Code task management skills (tasks-sync / tasks-log-progress / tasks-show)
+# resolve the canonical index file from this variable when no explicit argument is passed.
+export CLAUDE_TASKS_FILE="$HOME/claude_default_workspace/tasks/tasks.md"
+
 # 端末固有の上書き設定があれば読み込む
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

@@ -11,7 +11,7 @@ Read the task management markdown file and present its contents in a digestible 
 
 ## Inputs
 
-- **target file**: optional first argument. Defaults to `~/claude_default_workspace/tasks/tasks.md` (or `$TASKS_FILE` if set)
+- **target file**: optional first argument. If omitted, fall back to `$CLAUDE_TASKS_FILE`. If neither is provided, ask the user for the path (no hardcoded default)
 - **selector**: optional second argument
   - omitted → **list mode**
   - matches `^T\d+$` → **detail mode** for that row ID
