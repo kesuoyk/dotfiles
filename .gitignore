@@ -18,3 +18,9 @@
 !/.config/nvim/
 !/.config/mise/
 !/.config/mise/config.toml
+
+# Claude Code skills (machine-local settings.local.json stays ignored)
+!/.claude/
+/.claude/*
+!/.claude/skills/
+!/.claude/skills/**

@@ -54,6 +54,11 @@ link_path "$REPO_ROOT/.zshrc" "$HOME/.zshrc"
 link_path "$REPO_ROOT/.config/nvim" "$HOME/.config/nvim"
 link_path "$MISE_CONFIG" "$HOME_MISE_CONFIG"
 
+for skill_dir in "$REPO_ROOT/.claude/skills"/*/; do
+  skill_name="$(basename "$skill_dir")"
+  link_path "$REPO_ROOT/.claude/skills/$skill_name" "$HOME/.claude/skills/$skill_name"
+done
+
 if ! command -v mise >/dev/null 2>&1; then
   echo "Error: mise not found in PATH after brew bundle." >&2
   exit 1
